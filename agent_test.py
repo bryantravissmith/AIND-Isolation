@@ -3,7 +3,6 @@ This file contains test cases to verify the correct implementation of the
 functions required for this project including minimax, alphabeta, and iterative
 deepening.  The heuristic function is tested for conformance to the expected
 interface, but cannot be automatically assessed for correctness.
-
 STUDENTS SHOULD NOT NEED TO MODIFY THIS CODE.  IT WOULD BE BEST TO TREAT THIS
 FILE AS A BLACK BOX FOR TESTING.
 """
@@ -79,11 +78,9 @@ def handler(obj, testcase, queue):
 
 def timeout(time_limit):
     """Function decorator for unittest test cases to specify test case timeout.
-
     The timer mechanism works by spawning a new thread for the test to run in
     and using the timeout handler for the thread-safe queue class to abort and
     kill the child thread if it doesn't return within the timeout.
-
     It is not safe to access system resources (e.g., files) within test cases
     wrapped by this timer.
     """
@@ -117,7 +114,6 @@ def makeEvalTable(table):
     """Use a closure to create a heuristic function that returns values from
     a table that maps board locations to constant values. This supports testing
     the minimax and alphabeta search functions.
-
     THIS HEURISTIC IS ONLY USEFUL FOR TESTING THE SEARCH FUNCTIONALITY -
     IT IS NOT MEANT AS AN EXAMPLE OF A USEFUL HEURISTIC FOR GAME PLAYING.
     """
@@ -134,7 +130,6 @@ def makeEvalStop(limit, timer, value=None):
     timer to expire when a fixed number of node expansions have been perfomred
     during the search. This ensures that the search algorithm should always be
     in a predictable state regardless of node expansion order.
-
     THIS HEURISTIC IS ONLY USEFUL FOR TESTING THE SEARCH FUNCTIONALITY -
     IT IS NOT MEANT AS AN EXAMPLE OF A USEFUL HEURISTIC FOR GAME PLAYING.
     """
@@ -155,7 +150,6 @@ def makeBranchEval(first_branch):
     score when the root of the search is the first branch explored, and
     otherwise returns 0.  This heuristic is used to force alpha-beta to prune
     some parts of a game tree for testing.
-
     THIS HEURISTIC IS ONLY USEFUL FOR TESTING THE SEARCH FUNCTIONALITY -
     IT IS NOT MEANT AS AN EXAMPLE OF A USEFUL HEURISTIC FOR GAME PLAYING.
     """
@@ -173,7 +167,6 @@ def makeBranchEval(first_branch):
 class CounterBoard(isolation.Board):
     """Subclass of the isolation board that maintains counters for the number
     of unique nodes and total nodes visited during depth first search.
-
     Some functions from the base class must be overridden to maintain the
     counters during search.
     """
@@ -361,7 +354,6 @@ class Project1Test(unittest.TestCase):
     # @unittest.skip("Skip minimax test.")  # Uncomment this line to skip test
     def test_minimax(self):
         """ Test CustomPlayer.minimax
-
         This test uses a scoring function that returns a constant value based
         on the location of the search agent on the board to force minimax to
         choose a branch that visits those cells at a specific fixed-depth.
@@ -426,7 +418,6 @@ class Project1Test(unittest.TestCase):
     # @unittest.skip("Skip alpha-beta test.")  # Uncomment this line to skip test
     def test_alphabeta(self):
         """ Test CustomPlayer.alphabeta
-
         This test uses a scoring function that returns a constant value based
         on the branch being searched by alphabeta in the user agent, and forces
         the search to prune on every other branch it visits. By using a huge
@@ -529,7 +520,7 @@ class Project1Test(unittest.TestCase):
 
             diff_total = abs(board.counts[0] - exact_counts[idx][0])
             diff_unique = abs(board.counts[1] - exact_counts[idx][1])
-
+            print(diff_total, diff_unique)
             self.assertTrue(diff_total <= 1 and diff_unique == 0, ID_FAIL)
 
             self.assertTrue(chosen_move in legal_moves, INVALID_MOVE.format(

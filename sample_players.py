@@ -8,18 +8,15 @@ from random import randint
 def null_score(game, player):
     """This heuristic presumes no knowledge for non-terminal states, and
     returns the same uninformative value for all other states.
-
     Parameters
     ----------
     game : `isolation.Board`
         An instance of `isolation.Board` encoding the current state of the
         game (e.g., player locations and blocked cells).
-
     player : hashable
         One of the objects registered by the game object as a valid player.
         (i.e., `player` should be either game.__player_1__ or
         game.__player_2__).
-
     Returns
     ----------
     float
@@ -38,18 +35,15 @@ def null_score(game, player):
 def open_move_score(game, player):
     """The basic evaluation function described in lecture that outputs a score
     equal to the number of moves open for your computer player on the board.
-
     Parameters
     ----------
     game : `isolation.Board`
         An instance of `isolation.Board` encoding the current state of the
         game (e.g., player locations and blocked cells).
-
     player : hashable
         One of the objects registered by the game object as a valid player.
         (i.e., `player` should be either game.__player_1__ or
         game.__player_2__).
-
     Returns
     ----------
     float
@@ -68,18 +62,15 @@ def improved_score(game, player):
     """The "Improved" evaluation function discussed in lecture that outputs a
     score equal to the difference in the number of moves available to the
     two players.
-
     Parameters
     ----------
     game : `isolation.Board`
         An instance of `isolation.Board` encoding the current state of the
         game (e.g., player locations and blocked cells).
-
     player : hashable
         One of the objects registered by the game object as a valid player.
         (i.e., `player` should be either game.__player_1__ or
         game.__player_2__).
-
     Returns
     ----------
     float
@@ -101,22 +92,18 @@ class RandomPlayer():
 
     def get_move(self, game, legal_moves, time_left):
         """Randomly select a move from the available legal moves.
-
         Parameters
         ----------
         game : `isolation.Board`
             An instance of `isolation.Board` encoding the current state of the
             game (e.g., player locations and blocked cells).
-
         legal_moves : list<(int, int)>
             A list containing legal moves. Moves are encoded as tuples of pairs
             of ints defining the next (row, col) for the agent to occupy.
-
         time_left : callable
             A function that returns the number of milliseconds left in the
             current turn. Returning with any less than 0 ms remaining forfeits
             the game.
-
         Returns
         ----------
         (int, int)
@@ -140,22 +127,18 @@ class GreedyPlayer():
     def get_move(self, game, legal_moves, time_left):
         """Select the move from the available legal moves with the highest
         heuristic score.
-
         Parameters
         ----------
         game : `isolation.Board`
             An instance of `isolation.Board` encoding the current state of the
             game (e.g., player locations and blocked cells).
-
         legal_moves : list<(int, int)>
             A list containing legal moves. Moves are encoded as tuples of pairs
             of ints defining the next (row, col) for the agent to occupy.
-
         time_left : callable
             A function that returns the number of milliseconds left in the
             current turn. Returning with any less than 0 ms remaining forfeits
             the game.
-
         Returns
         ----------
         (int, int)
@@ -177,27 +160,22 @@ class HumanPlayer():
         """
         Select a move from the available legal moves based on user input at the
         terminal.
-
         **********************************************************************
         NOTE: If testing with this player, remember to disable move timeout in
               the call to `Board.play()`.
         **********************************************************************
-
         Parameters
         ----------
         game : `isolation.Board`
             An instance of `isolation.Board` encoding the current state of the
             game (e.g., player locations and blocked cells).
-
         legal_moves : list<(int, int)>
             A list containing legal moves. Moves are encoded as tuples of pairs
             of ints defining the next (row, col) for the agent to occupy.
-
         time_left : callable
             A function that returns the number of milliseconds left in the
             current turn. Returning with any less than 0 ms remaining forfeits
             the game.
-
         Returns
         ----------
         (int, int)
@@ -207,7 +185,9 @@ class HumanPlayer():
         """
         if not legal_moves:
             return (-1, -1)
-
+        print()
+        print(game.to_string())
+        print()
         print(('\t'.join(['[%d] %s' % (i, str(move)) for i, move in enumerate(legal_moves)])))
 
         valid_choice = False
