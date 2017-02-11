@@ -30,8 +30,15 @@ from sample_players import open_move_score
 from sample_players import improved_score
 from game_agent import CustomPlayer
 from game_agent import custom_score
+from game_agent import custom_heuristic_takeway_moves
+from game_agent import custom_heuristic_center
+from game_agent import custom_heuristic_change_during_game
+from game_agent import custom_heuristic_opp_has_less_moves_end_game
+from game_agent import custom_heuristic_lower_distance
+from game_agent import custom_heuristic_improve_as_game_ends
 
-NUM_MATCHES = 5  # number of matches against each opponent
+
+NUM_MATCHES = 25  # number of matches against each opponent
 TIME_LIMIT = 150  # number of milliseconds before timeout
 
 TIMEOUT_WARNING = "One or more agents lost a match this round due to " + \
@@ -121,9 +128,24 @@ def play_round(agents, num_matches):
         for p1, p2 in itertools.permutations((agent_1.player, agent_2.player)):
             for _ in range(num_matches):
                 score_1, score_2 = play_match(p1, p2)
+                """
+                if p1 == agent_1.player:
+                    print(names[0], sum(p1.depths) / len(p1.depths))
+                elif p2 == agent_1.player:
+                    print(names[0], sum(p2.depths) / len(p2.depths))
+
+                if p1 == agent_2.player:
+                    print(names[1], sum(p1.depths) / len(p1.depths))
+                elif p2 == agent_2.player:
+                    print(names[1], sum(p2.depths) / len(p2.depths))
+                """
+                p1.depths = []
+                p2.dpeths = []
+
                 counts[p1] += score_1
                 counts[p2] += score_2
                 total += score_1 + score_2
+                print(agent_1.name, counts[agent_1.player], agent_2.name, counts[agent_2.player])
 
         wins += counts[agent_1.player]
 
@@ -161,7 +183,15 @@ def main():
     test_agents = [Agent(CustomPlayer(score_fn=improved_score, **CUSTOM_ARGS), "ID_Improved"),
                    Agent(CustomPlayer(score_fn=custom_score, **CUSTOM_ARGS), "Student")]
 
-    test_agents = [Agent(CustomPlayer(score_fn=custom_score, **CUSTOM_ARGS), "Student")]
+    test_agents = [
+        Agent(CustomPlayer(score_fn=improved_score, **CUSTOM_ARGS), "ID_Improved"),
+        Agent(CustomPlayer(score_fn=custom_heuristic_takeway_moves, **CUSTOM_ARGS), "Student Take Away"),
+        Agent(CustomPlayer(score_fn=custom_heuristic_center, **CUSTOM_ARGS), "Student Center"),
+        Agent(CustomPlayer(score_fn=custom_heuristic_opp_has_less_moves_end_game, **CUSTOM_ARGS), "Student Opp Less"),
+        Agent(CustomPlayer(score_fn=custom_heuristic_change_during_game, **CUSTOM_ARGS), "Student Change")
+    ]
+
+    test_agents = [Agent(CustomPlayer(score_fn=custom_heuristic_improve_as_game_ends, **CUSTOM_ARGS), "Student IGE")]
 
     print(DESCRIPTION)
     for agentUT in test_agents:
@@ -170,7 +200,9 @@ def main():
         print("{:^25}".format("Evaluating: " + agentUT.name))
         print("*************************")
 
-        agents = random_agents + mm_agents + ab_agents + [agentUT]
+        agents = random_agents + mm_agents + ab_agents + [Agent(CustomPlayer(score_fn=custom_heuristic_opp_has_less_moves_end_game, **CUSTOM_ARGS), "Student Opponent Less")] + [agentUT]
+
+        agents = [Agent(CustomPlayer(score_fn=improved_score, **CUSTOM_ARGS), "ID_Improved"), agentUT]
         win_ratio = play_round(agents, NUM_MATCHES)
 
         print("\n\nResults:")

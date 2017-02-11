@@ -279,7 +279,7 @@ class Board(object):
 
         return out
 
-    def play(self, time_limit=TIME_LIMIT_MILLIS,human=False):
+    def play(self, time_limit=TIME_LIMIT_MILLIS, human=False):
         """
         Execute a match between the players by alternately soliciting them
         to select a move and applying it in the game.
@@ -306,7 +306,7 @@ class Board(object):
             game_copy = self.copy()
 
             move_start = curr_time_millis()
-            time_left = lambda : time_limit - (curr_time_millis() - move_start)
+            time_left = lambda: time_limit - (curr_time_millis() - move_start)
             curr_move = self.active_player.get_move(game_copy, legal_player_moves, time_left)
             move_end = time_left()
 
